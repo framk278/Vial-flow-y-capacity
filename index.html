@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Métodos Numéricos — Visualizador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">Métodos Numéricos</div>
+    <button class="btn btn-theme" onclick="toggleTheme()">Cambiar tema</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Procedimiento, explicación y descarga de los archivos</h1>
+  <p>La página muestra qué hace cada programa, su procedimiento paso a paso y permite descargar el .m original en su respectiva sección.</p>
+</section>
+
+<div class="wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="showTab(0)">📐 Trapecio Compuesto</button>
+    <button class="tab" onclick="showTab(1)">🚗 Flujo Vehicular</button>
+  </div>
+
+  <div class="panel active">
+    <div class="grid">
+      <div class="card">
+        <div class="hero-img" role="button" tabindex="0" title="Clic para ver imagen completa">
+          <img src="Trapecio compuesto.jpeg" alt="Método del trapecio compuesto">
+        </div>
+        <h3>¿Qué hace este programa?</h3>
+        <div class="body">
+          <p>Calcula el volumen total de agua usando la regla del trapecio compuesto sobre datos de tiempo y caudal.</p>
+          <div class="formula">∫ Q(t) dt ≈ (h/2) · [Q₀ + 2·ΣQᵢ + Qₙ]</div>
+          <p class="muted">El método exige intervalos de tiempo iguales.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Procedimiento paso a paso</h3>
+        <div class="body">
+          <ul class="steps">
+            <li class="step"><div class="num">1</div><p>El programa pide la cantidad de datos.</p></li>
+            <li class="step"><div class="num">2</div><p>Se ingresan pares de tiempo y caudal.</p></li>
+            <li class="step"><div class="num">3</div><p>Se valida que todos los intervalos sean iguales.</p></li>
+            <li class="step"><div class="num">4</div><p>Se aplica la fórmula del trapecio compuesto.</p></li>
+            <li class="step"><div class="num">5</div><p>Se convierte el resultado a volumen total y se grafica.</p></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Descargar archivo original</h3>
+        <div class="body">
+          <div class="download">
+            <div>
+              <strong>trapecio_compuesto.m</strong><br>
+              <span class="muted">Archivo MATLAB original del método del trapecio compuesto.</span>
+            </div>
+            <a download="trapecio_compuesto.m" href="data:text/plain;base64,PUT_TRAPECIO_BASE64_HERE">⬇ Descargar .m</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sim">
+        <div class="sim-head">Simulador interactivo — Trapecio compuesto</div>
+        <div class="sim-body">
+          <div class="sim-grid">
+            <div>
+              <label class="small">Número de datos (n)</label>
+              <input id="trap-n" type="number" value="5" min="3" max="20" onchange="buildTrap()">
+              <div style="overflow:auto">
+                <table>
+                  <thead>
+                    <tr><th>#</th><th>Tiempo</th><th>Caudal</th></tr>
+                  </thead>
+                  <tbody id="trap-body"></tbody>
+                </table>
+              </div>
+              <button class="run" onclick="runTrap()">Calcular volumen</button>
+            </div>
+            <div>
+              <div class="results" id="trap-results"></div>
+              <div class="chart" id="trap-chart-wrap"><canvas id="trap-chart"></canvas></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="grid">
+      <div class="card">
+        <div class="hero-img" role="button" tabindex="0" title="Clic para ver imagen completa">
+          <img src="flujo vehicular.jpeg" alt="Análisis de flujo vehicular">
+        </div>
+        <h3>¿Qué hace este programa?</h3>
+        <div class="body">
+          <p>Analiza el flujo vehicular por hora usando la derivada central para medir la tasa de cambio.</p>
+          <div class="formula" style="color:var(--accent2)">f'(xᵢ) ≈ [f(xᵢ₊₁) − f(xᵢ₋₁)] / (2h)</div>
+          <p class="muted">Sirve para clasificar el tráfico como estable, moderado o crítico.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Procedimiento paso a paso</h3>
+        <div class="body">
+          <ul class="steps">
+            <li class="step"><div class="num">1</div><p>Se define el vector de horas de 6:00 a 12:00.</p></li>
+            <li class="step"><div class="num">2</div><p>Se ingresan los vehículos por cada hora.</p></li>
+            <li class="step"><div class="num">3</div><p>Se calcula la derivada central en los puntos interiores.</p></li>
+            <li class="step"><div class="num">4</div><p>Se clasifica cada punto según la magnitud del cambio.</p></li>
+            <li class="step"><div class="num">5</div><p>Se muestran resultados y gráficas.</p></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Descargar archivo original</h3>
+        <div class="body">
+          <div class="download">
+            <div>
+              <strong>flujo_vehicular.m</strong><br>
+              <span class="muted">Archivo MATLAB original del análisis de flujo vehicular.</span>
+            </div>
+            <a class="purple" download="flujo_vehicular.m" href="data:text/plain;base64,PUT_FLUJO_BASE64_HERE">⬇ Descargar .m</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sim">
+        <div class="sim-head">Simulador interactivo — Flujo vehicular</div>
+        <div class="sim-body">
+          <div class="sim-grid">
+            <div>
+              <div id="flujo-inputs"></div>
+              <button class="run purple" onclick="runFlujo()">Analizar flujo</button>
+            </div>
+            <div>
+              <div class="results" id="flujo-results"></div>
+              <div class="chart" id="flujo-chart-wrap"><canvas id="flujo-chart"></canvas></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="assistant-toggle" onclick="toggleAssistant()" aria-label="Abrir asistente">💬</button>
+
+<aside class="assistant-shell" id="assistantShell">
+  <div class="assistant-header">
+    <div>
+      <h2>Asistente IA</h2>
+      <span class="assistant-badge">Solo tema permitido</span>
+    </div>
+    <button class="close-btn" onclick="toggleAssistant()">×</button>
+  </div>
+  <div class="assistant-topic"><strong>Tema:</strong> Métodos numéricos y los archivos de esta página</div>
+  <div id="chatBox" class="chat-box"></div>
+  <form id="chatForm" class="chat-form">
+    <input id="userInput" type="text" placeholder="Haz una pregunta sobre el tema..." autocomplete="off" />
+    <button type="submit">Enviar</button>
+  </form>
+</aside>
+
+<dialog class="lightbox" id="imageLightbox" aria-label="Vista ampliada de imagen">
+  <button type="button" class="lightbox-close" aria-label="Cerrar">×</button>
+  <img id="lightboxImg" src="" alt="">
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>

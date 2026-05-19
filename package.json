@@ -1,0 +1,6 @@
+{
+  "name": "metodos-numericos-infografia",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sitio estático: sube index.html, app.js, styles.css y config.js (sin node_modules)."
+}
