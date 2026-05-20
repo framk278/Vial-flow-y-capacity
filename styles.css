@@ -629,3 +629,247 @@ th {
   line-height: 1;
   padding: 4px 8px;
 }
+
+/* ── Imagen y video separados ──────────────────────────────────────────── */
+.grid-media {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 820px) {
+  .grid-media {
+    grid-template-columns: 1fr;
+  }
+}
+
+.media-split h3 {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+.media-split .body {
+  padding-top: 14px;
+}
+
+.media-split .hero-img {
+  height: 260px;
+  border-bottom: none;
+}
+
+.hero-media {
+  background: var(--surface2);
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-video {
+  width: 100%;
+  max-height: 280px;
+  display: block;
+  background: #000;
+}
+
+.sim-wide {
+  grid-column: 1 / -1;
+}
+
+.media-split:not(:has(.body p)) .hero-media {
+  border-radius: 0 0 18px 18px;
+}
+
+.grid-matrix {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-matrix .matrix-header-card {
+  grid-column: 1 / -1;
+}
+
+.matrix-box h3 {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+.small-label {
+  margin-bottom: 12px;
+  font-size: 0.88rem;
+}
+
+.table-scroll {
+  overflow: auto;
+}
+
+@media (max-width: 820px) {
+  .grid-matrix {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Pestañas principales (responsive) ─────────────────────────────────── */
+.tabs-main {
+  flex-wrap: wrap;
+}
+
+.tabs-main .tab {
+  flex: 1 1 auto;
+  min-width: 120px;
+  font-size: 0.9rem;
+}
+
+.tabs-sub {
+  margin-bottom: 18px;
+}
+
+.tabs-sub .tab {
+  font-size: 0.85rem;
+}
+
+/* ── Matriz comparativa ─────────────────────────────────────────────────── */
+.matrix-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+
+.matrix-controls input[type="range"] {
+  flex: 1;
+  min-width: 160px;
+}
+
+.matrix-n-val {
+  font-family: var(--mono);
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 3rem;
+}
+
+.matrix-table td:nth-child(n+2),
+.matrix-table th:nth-child(n+2) {
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 0.88rem;
+}
+
+.matrix-table tr.best td:first-child {
+  color: var(--green);
+}
+
+/* ── Teoría: acordeones y paneles ──────────────────────────────────────── */
+.theory-panel {
+  display: none;
+  margin-top: 8px;
+}
+
+.theory-panel.active {
+  display: block;
+}
+
+.accordion {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  background: var(--surface2);
+  overflow: hidden;
+}
+
+.accordion summary {
+  padding: 14px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.accordion summary::after {
+  content: "▾";
+  float: right;
+  color: var(--muted);
+}
+
+.accordion:not([open]) summary::after {
+  content: "▸";
+}
+
+.card-theory .body {
+  max-width: none;
+}
+
+.theory-intro {
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  line-height: 1.65;
+}
+
+.theory-intro p + p {
+  margin-top: 10px;
+}
+
+.accordion-body {
+  padding: 0 16px 16px;
+}
+
+.accordion-body p {
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.accordion-body .formula {
+  margin: 12px 0;
+}
+
+.theory-list {
+  margin: 10px 0 12px 18px;
+  display: grid;
+  gap: 6px;
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.theory-note {
+  font-size: 0.9rem;
+  color: var(--accent);
+  background: rgba(79, 140, 255, 0.1);
+  border-left: 3px solid var(--accent);
+  padding: 10px 12px;
+  border-radius: 0 10px 10px 0;
+  margin-top: 8px;
+}
+
+.anim-block h4 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.anim-block .muted {
+  margin-bottom: 12px;
+  line-height: 1.55;
+}
+
+.anim-block {
+  margin-top: 20px;
+  padding: 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.anim-block input[type="range"] {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.chart-show {
+  display: block;
+  height: 260px;
+}

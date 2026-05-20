@@ -24,17 +24,35 @@
 </section>
 
 <div class="wrap">
-  <div class="tabs">
-    <button class="tab active" onclick="showTab(0)">📐 Trapecio Compuesto</button>
-    <button class="tab" onclick="showTab(1)">🚗 Flujo Vehicular</button>
+  <div class="tabs tabs-main">
+    <button class="tab active" onclick="showTab(0)">📐 Trapecio</button>
+    <button class="tab" onclick="showTab(1)">🚗 Flujo</button>
+    <button class="tab" onclick="showTab(2)">📊 Matriz</button>
+    <button class="tab" onclick="showTab(3)">📚 Teoría</button>
   </div>
 
   <div class="panel active">
-    <div class="grid">
-      <div class="card">
-        <div class="hero-img" role="button" tabindex="0" title="Clic para ver imagen completa">
-          <img src="Trapecio compuesto.jpeg" alt="Método del trapecio compuesto">
+    <div class="grid grid-media">
+      <div class="card media-split">
+        <h3>Infografía — Trapecio compuesto</h3>
+        <div class="hero-img" role="button" tabindex="0" title="Clic para ampliar la imagen">
+          <img src="Trapecio compuesto.jpeg" alt="Diagrama del método del trapecio compuesto">
         </div>
+        <div class="body">
+          <p class="muted">Representación gráfica del área bajo la curva de caudal dividida en trapecios de base h.</p>
+        </div>
+      </div>
+
+      <div class="card media-split">
+        <h3>Video — Trapecio compuesto</h3>
+        <div class="hero-media">
+          <video class="hero-video" controls playsinline preload="metadata">
+            <source src="Trapecio compuesto.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="card">
         <h3>¿Qué hace este programa?</h3>
         <div class="body">
           <p>Calcula el volumen total de agua usando la regla del trapecio compuesto sobre datos de tiempo y caudal.</p>
@@ -69,7 +87,7 @@
         </div>
       </div>
 
-      <div class="sim">
+      <div class="sim sim-wide">
         <div class="sim-head">Simulador interactivo — Trapecio compuesto</div>
         <div class="sim-body">
           <div class="sim-grid">
@@ -97,11 +115,27 @@
   </div>
 
   <div class="panel">
-    <div class="grid">
-      <div class="card">
-        <div class="hero-img" role="button" tabindex="0" title="Clic para ver imagen completa">
-          <img src="flujo vehicular.jpeg" alt="Análisis de flujo vehicular">
+    <div class="grid grid-media">
+      <div class="card media-split">
+        <h3>Infografía — Flujo vehicular</h3>
+        <div class="hero-img" role="button" tabindex="0" title="Clic para ampliar la imagen">
+          <img src="flujo vehicular.jpeg" alt="Gráfica de flujo vehicular y derivada central">
         </div>
+        <div class="body">
+          <p class="muted">Visualización del conteo horario de vehículos y la pendiente estimada en cada intervalo.</p>
+        </div>
+      </div>
+
+      <div class="card media-split">
+        <h3>Video — Flujo vehicular</h3>
+        <div class="hero-media">
+          <video class="hero-video" controls playsinline preload="metadata">
+            <source src="Flujo vehicular.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="card">
         <h3>¿Qué hace este programa?</h3>
         <div class="body">
           <p>Analiza el flujo vehicular por hora usando la derivada central para medir la tasa de cambio.</p>
@@ -136,7 +170,7 @@
         </div>
       </div>
 
-      <div class="sim">
+      <div class="sim sim-wide">
         <div class="sim-head">Simulador interactivo — Flujo vehicular</div>
         <div class="sim-body">
           <div class="sim-grid">
@@ -147,6 +181,198 @@
             <div>
               <div class="results" id="flujo-results"></div>
               <div class="chart" id="flujo-chart-wrap"><canvas id="flujo-chart"></canvas></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="grid grid-matrix">
+      <div class="card matrix-header-card">
+        <h3>Tabla comparativa de métodos</h3>
+        <div class="body">
+          <p class="muted">Caso de prueba: f(x) = x². Integral ∫₀¹ f(x)dx = 1/3. Derivada f'(0,5) = 1 y f''(0,5) = 2.</p>
+          <div class="matrix-controls">
+            <label class="small">Subintervalos n</label>
+            <input id="matrix-n" type="range" min="2" max="40" value="10" oninput="updateMatrix()">
+            <span id="matrix-n-val" class="matrix-n-val">10</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card matrix-box">
+        <h3>Derivadas (diferencias finitas)</h3>
+        <div class="body">
+          <p class="muted small-label">Valor analítico: f'(0,5) = 1,0000 · f''(0,5) = 2,0000</p>
+          <div class="table-scroll">
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>Método</th>
+                  <th>Resultado numérico</th>
+                  <th>Valor analítico</th>
+                  <th>Error relativo %</th>
+                  <th>Eval. f</th>
+                </tr>
+              </thead>
+              <tbody id="matrix-body-der"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card matrix-box">
+        <h3>Integrales</h3>
+        <div class="body">
+          <p class="muted small-label">Valor analítico: ∫₀¹ x² dx = 0,3333</p>
+          <div class="table-scroll">
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>Método</th>
+                  <th>Resultado numérico</th>
+                  <th>Valor analítico</th>
+                  <th>Error relativo %</th>
+                  <th>Eval. f</th>
+                </tr>
+              </thead>
+              <tbody id="matrix-body-int"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="grid">
+      <div class="card card-theory">
+        <h3>Contextualización teórica</h3>
+        <div class="body">
+          <div class="tabs tabs-sub">
+            <button class="tab active" type="button" onclick="showTheoryTab(0)">Diferencias finitas</button>
+            <button class="tab" type="button" onclick="showTheoryTab(1)">Integral</button>
+          </div>
+
+          <div class="theory-panel active" id="theory-diff">
+            <div class="theory-intro">
+              <p>Las <strong>diferencias finitas</strong> aproximan derivadas cuando solo se tienen mediciones discretas — por ejemplo, vehículos contados cada hora. La elección del esquema depende de si existen datos hacia adelante, hacia atrás o en ambos lados del punto.</p>
+              <p class="muted">El paso <em>h</em> equilibra precisión y ruido: un h muy pequeño amplifica errores de medición; uno muy grande pierde detalle de la curva real.</p>
+            </div>
+
+            <details class="accordion" open>
+              <summary>Progresiva (1.er orden)</summary>
+              <div class="accordion-body">
+                <p class="formula">f'(x) ≈ [f(x+h) − f(x)] / h</p>
+                <p>Surge del desarrollo de Taylor hacia delante. Solo usa puntos posteriores a <em>x</em>, ideal en monitoreo en tiempo real.</p>
+                <ul class="theory-list">
+                  <li><strong>Error de truncamiento:</strong> O(h).</li>
+                  <li><strong>Ventaja:</strong> no requiere valores anteriores al instante actual.</li>
+                  <li><strong>Limitación:</strong> sesgo según la curvatura de f.</li>
+                </ul>
+                <p class="theory-note">Ejemplo: estimar el crecimiento del tráfico a las 8:00 usando el dato de las 9:00.</p>
+              </div>
+            </details>
+
+            <details class="accordion">
+              <summary>Regresiva (1.er orden)</summary>
+              <div class="accordion-body">
+                <p class="formula">f'(x) ≈ [f(x) − f(x−h)] / h</p>
+                <p>Emplea el punto actual y uno anterior. Útil cuando los datos históricos están completos pero no hay mediciones posteriores.</p>
+                <ul class="theory-list">
+                  <li><strong>Error:</strong> O(h), igual que la progresiva.</li>
+                  <li><strong>Ventaja:</strong> adecuada al evaluar el final de una serie temporal.</li>
+                  <li><strong>Limitación:</strong> menos precisa que la centrada para la misma h.</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="accordion">
+              <summary>Centrada (1.er orden)</summary>
+              <div class="accordion-body">
+                <p class="formula">f'(x) ≈ [f(x+h) − f(x−h)] / (2h)</p>
+                <p>Combina información simétrica. El error pasa a <strong>O(h²)</strong>, por eso el programa de flujo vehicular la usa en horas interiores (7:00–11:00).</p>
+                <ul class="theory-list">
+                  <li><strong>Requisito:</strong> paso h constante (en el código, h = 1 hora).</li>
+                  <li><strong>Interpretación:</strong> valores altos → subida brusca; negativos → descenso del flujo.</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="accordion">
+              <summary>Centrada (2.º orden)</summary>
+              <div class="accordion-body">
+                <p class="formula">f''(x) ≈ [f(x+h) − 2f(x) + f(x−h)] / h²</p>
+                <p>Aproxima la <strong>concavidad</strong> de la función: aceleración del tráfico o curvatura del caudal. Más sensible al ruido porque divide por h².</p>
+                <ul class="theory-list">
+                  <li><strong>Error:</strong> O(h²) con f suficientemente regular.</li>
+                  <li><strong>Uso:</strong> detectar puntos de inflexión en series temporales.</li>
+                </ul>
+              </div>
+            </details>
+
+            <div class="anim-block">
+              <h4>Error de derivada frente al paso h</h4>
+              <p class="muted">Desliza para comparar esquemas. Punto resaltado = h actual; caso f(x) = x² en x = 0,5 (derivada exacta = 1).</p>
+              <input id="h-diff" type="range" min="0.01" max="0.5" step="0.01" value="0.2" oninput="animateError('diff')">
+              <span id="h-diff-val" class="matrix-n-val">h = 0,20</span>
+              <div class="chart chart-show"><canvas id="chart-diff-error"></canvas></div>
+            </div>
+          </div>
+
+          <div class="theory-panel" id="theory-int">
+            <div class="theory-intro">
+              <p>Las <strong>integrales numéricas</strong> estiman el área bajo una curva sin primitiva cerrada o con datos experimentales — como la integral del caudal en el tiempo para obtener volumen de agua.</p>
+              <p class="muted">Los métodos compuestos requieren subintervalos de ancho h = (b − a) / n uniformes. Sin ello, las fórmulas clásicas no son válidas.</p>
+            </div>
+
+            <details class="accordion" open>
+              <summary>Trapecio compuesto</summary>
+              <div class="accordion-body">
+                <p class="formula">∫ₐᵇ f(x)dx ≈ (h/2)[f₀ + 2Σfᵢ + fₙ]</p>
+                <p>Sustituye la función por segmentos lineales. Es el método del programa de caudal: extremos con peso 1, nodos internos con peso 2.</p>
+                <ul class="theory-list">
+                  <li><strong>Error global:</strong> O(h²) para funciones suaves.</li>
+                  <li><strong>Ventaja:</strong> válido para cualquier n ≥ 1; fácil de programar.</li>
+                  <li><strong>En esta página:</strong> el simulador rechaza tiempos con Δt distintos.</li>
+                </ul>
+                <p class="theory-note">Cada trapecio tiene altura h y bases f(xᵢ), f(xᵢ₊₁).</p>
+              </div>
+            </details>
+
+            <details class="accordion">
+              <summary>Simpson 1/3</summary>
+              <div class="accordion-body">
+                <p class="formula">∫ ≈ (h/3)[f₀ + 4f₁ + 2f₂ + 4f₃ + … + fₙ]</p>
+                <p>Interpola parábolas en pares de subintervalos. Error <strong>O(h⁴)</strong>: converge mucho más rápido que el trapecio al reducir h.</p>
+                <ul class="theory-list">
+                  <li><strong>Condición:</strong> n par.</li>
+                  <li><strong>Coeficientes:</strong> 4 en impares, 2 en pares internos.</li>
+                  <li><strong>Recomendación:</strong> funciones suaves; evitar datos muy ruidosos.</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="accordion">
+              <summary>Simpson 3/8</summary>
+              <div class="accordion-body">
+                <p class="formula">∫ ≈ (3h/8)[f₀ + 3f₁ + 3f₂ + 2f₃ + 3f₄ + … + fₙ]</p>
+                <p>Basado en cubos locales en paneles de tres subintervalos. Mismo orden O(h⁴) que Simpson 1/3, con patrón 3–3–2.</p>
+                <ul class="theory-list">
+                  <li><strong>Condición:</strong> n múltiplo de 3.</li>
+                  <li><strong>Comparación:</strong> usa la pestaña Matriz con el mismo n.</li>
+                </ul>
+              </div>
+            </details>
+
+            <div class="anim-block">
+              <h4>Error de la integral frente al paso h</h4>
+              <p class="muted">Caso ∫₀¹ x² dx = 1/3. Al reducir h, Simpson converge más rápido que el trapecio.</p>
+              <input id="h-int" type="range" min="0.02" max="0.5" step="0.01" value="0.2" oninput="animateError('int')">
+              <span id="h-int-val" class="matrix-n-val">h = 0,20</span>
+              <div class="chart chart-show"><canvas id="chart-int-error"></canvas></div>
             </div>
           </div>
         </div>
@@ -178,6 +404,7 @@
   <img id="lightboxImg" src="" alt="">
 </dialog>
 
-<script src="app.js"></script>
+<script src="config.js"></script>
+<script src="App.js"></script>
 </body>
 </html>
