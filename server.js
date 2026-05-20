@@ -1,36 +1,31 @@
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
+require('dotenv').config();
 const Groq = require('groq-sdk');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const GROQ_API_KEY = process.env.GROQ_API_KEY || '';
-const CLIENT_CONFIG_PATH = path.join(__dirname, 'config.js');
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
+
+if (!GROQ_API_KEY) {
+  console.error('Falta GROQ_API_KEY en .env');
+}
+
+const groq = new Groq({ apiKey: GROQ_API_KEY });
 
 app.use(express.json({ limit: '1mb' }));
 app.use(express.static(__dirname));
 
-function readClientKey() {
-  try {
-    const txt = fs.readFileSync(CLIENT_CONFIG_PATH, 'utf8');
-    const m = txt.match(/window\.GROQ_API_KEY\s*=\s*['"]([^'"]*)['"]/);
-    return m ? m[1].trim() : '';
-  } catch {
-    return '';
-  }
-}
-
-const groq = new Groq({ apiKey: GROQ_API_KEY || readClientKey() });
-
 app.post('/api/chat', async (req, res) => {
   try {
     const messages = Array.isArray(req.body?.messages) ? req.body.messages : [];
-    if (!messages.length) return res.status(400).json({ error: 'Messages are required' });
+    if (!messages.length) {
+      return res.status(400).json({ error: 'Messages are required' });
+    }
 
     const system = {
       role: 'system',
-      content: 'Eres un tutor en español. Responde de forma natural, clara y directa. No uses plantillas fijas ni repitas frases predeterminadas. Si el usuario pregunta algo, responde exactamente a eso y no inventes una continuación.'
+      content: 'Eres un tutor en español. Responde de forma natural, clara y directa. No uses plantillas fijas ni repitas frases predeterminadas.'
     };
 
     const completion = await groq.chat.completions.create({
@@ -42,7 +37,10 @@ app.post('/api/chat', async (req, res) => {
     });
 
     const answer = completion.choices?.[0]?.message?.content?.trim() || '';
-    if (!answer) return res.status(500).json({ error: 'Empty answer from model' });
+    if (!answer) {
+      return res.status(500).json({ error: 'Empty answer from model' });
+    }
+
     return res.json({ answer });
   } catch (error) {
     console.error(error);
