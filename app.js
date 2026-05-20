@@ -8,7 +8,6 @@ let trapChart = null,
 ========================= */
 
 function showTab(i){
-
   document
     .querySelectorAll('.wrap > .panel')
     .forEach((p,idx)=>
@@ -32,7 +31,6 @@ function showTab(i){
 }
 
 function showTheoryTab(i){
-
   document
     .querySelectorAll('.theory-panel')
     .forEach((p,idx)=>
@@ -51,9 +49,7 @@ function showTheoryTab(i){
 }
 
 function toggleTheme(){
-
   const r = document.documentElement;
-
   r.setAttribute(
     'data-theme',
     r.getAttribute('data-theme') === 'dark'
@@ -63,7 +59,6 @@ function toggleTheme(){
 }
 
 function toggleAssistant(){
-
   document
     .getElementById('assistantShell')
     .classList.toggle('open');
@@ -79,7 +74,6 @@ const defT = {
 };
 
 function buildTrap(){
-
   const n = parseInt(
     document.getElementById('trap-n').value
   );
@@ -90,12 +84,10 @@ function buildTrap(){
   tb.innerHTML='';
 
   for(let i=0;i<n;i++){
-
     const tr = document.createElement('tr');
 
     tr.innerHTML=`
       <td>${i+1}</td>
-
       <td>
         <input
           type="number"
@@ -104,7 +96,6 @@ function buildTrap(){
           id="tt${i}"
         >
       </td>
-
       <td>
         <input
           type="number"
@@ -120,7 +111,6 @@ function buildTrap(){
 }
 
 function runTrap(){
-
   const n = parseInt(
     document.getElementById('trap-n').value
   );
@@ -129,7 +119,6 @@ function runTrap(){
   const c = [];
 
   for(let i=0;i<n;i++){
-
     t.push(
       parseFloat(
         document.getElementById(`tt${i}`).value
@@ -146,7 +135,6 @@ function runTrap(){
   const h = t[1]-t[0];
 
   for(let i=1;i<n-1;i++){
-
     if(
       Math.abs((t[i+1]-t[i])-h) > 1e-6
     ){
@@ -156,14 +144,11 @@ function runTrap(){
   }
 
   let s = 0;
-
   for(let i=1;i<n-1;i++){
     s += c[i];
   }
 
-  const I =
-    (h/2)*(c[0]+2*s+c[n-1]);
-
+  const I = (h/2)*(c[0]+2*s+c[n-1]);
   const V = I*60;
 
   document
@@ -177,12 +162,10 @@ function runTrap(){
         <span>Ancho intervalo</span>
         <strong>${h.toFixed(2)} min</strong>
       </div>
-
       <div class="r">
         <span>Integral</span>
         <strong>${I.toFixed(4)}</strong>
       </div>
-
       <div class="r">
         <span>Volumen total</span>
         <strong>${V.toFixed(2)} m³</strong>
@@ -199,10 +182,8 @@ function runTrap(){
     document.getElementById('trap-chart'),
     {
       type:'line',
-
       data:{
         labels:t,
-
         datasets:[
           {
             label:'Caudal',
@@ -214,7 +195,6 @@ function runTrap(){
           }
         ]
       },
-
       options:{
         responsive:true,
         maintainAspectRatio:false
@@ -228,25 +208,18 @@ function runTrap(){
 ========================= */
 
 const H = [6,7,8,9,10,11,12];
-
 const defV = [120,180,350,420,300,250,200];
 
 function buildFlujo(){
-
-  const w =
-    document.getElementById('flujo-inputs');
-
+  const w = document.getElementById('flujo-inputs');
   w.innerHTML='';
 
   H.forEach((h,i)=>{
-
     const d = document.createElement('div');
-
     d.style.marginBottom='10px';
 
     d.innerHTML=`
       <label class="small">${h}:00</label>
-
       <input
         type="number"
         id="vh${i}"
@@ -259,7 +232,6 @@ function buildFlujo(){
 }
 
 function runFlujo(){
-
   const v = H.map(
     (_,i)=>
       parseFloat(
@@ -274,9 +246,7 @@ function runFlujo(){
   }
 
   let html='';
-
   for(let i=1;i<6;i++){
-
     html += `
       <div class="der">
         <strong>${H[i]}:00</strong>
@@ -303,10 +273,8 @@ function runFlujo(){
     document.getElementById('flujo-chart'),
     {
       type:'line',
-
       data:{
         labels:H.map(h=>h+':00'),
-
         datasets:[
           {
             label:'Vehículos/hora',
@@ -318,7 +286,6 @@ function runFlujo(){
           }
         ]
       },
-
       options:{
         responsive:true,
         maintainAspectRatio:false
@@ -332,32 +299,21 @@ function runFlujo(){
 ========================= */
 
 const fx = x => x * x;
-
 const INT_EXACT = 1 / 3;
-
 const DER_EXACT = 1;
-
-const DER2_EXACT = 2;
-
 const X0 = 0.5;
 
 function trapInt(n){
-
   const h = 1 / n;
-
   let s = 0;
-
   for(let i = 1; i < n; i++){
     s += fx(i * h);
   }
-
   return (h / 2) * (fx(0) + 2 * s + fx(1));
 }
 
 function simpson13(n){
-
   const h = 1 / n;
-
   let s = fx(0) + fx(1);
 
   for(let i = 1; i < n; i += 2){
@@ -372,13 +328,11 @@ function simpson13(n){
 }
 
 function simpson38(n){
-
   if(n % 3 !== 0){
     return NaN;
   }
 
   const h = 1 / n;
-
   let s = fx(0) + fx(1);
 
   for(let i = 1; i < n; i++){
@@ -389,22 +343,16 @@ function simpson38(n){
 }
 
 function relErr(num, exact){
-
   if(!exact) return 0;
-
   return Math.abs((num - exact) / exact) * 100;
 }
 
 function renderMatrixRows(rows, tbodyId){
-
   let best = Infinity;
 
   rows.forEach(r => {
-
     if(!Number.isNaN(r.num)){
-
       const e = relErr(r.num, r.exact);
-
       if(e < best){
         best = e;
       }
@@ -413,23 +361,17 @@ function renderMatrixRows(rows, tbodyId){
 
   document.getElementById(tbodyId).innerHTML =
     rows.map(r => {
-
       if(Number.isNaN(r.num)){
-
         return `
           <tr>
             <td>${r.name}</td>
-            <td colspan="4" class="muted">
-              n incompatible
-            </td>
+            <td colspan="4" class="muted">n incompatible</td>
           </tr>
         `;
       }
 
       const err = relErr(r.num, r.exact);
-
-      const cls =
-        err === best ? ' class="best"' : '';
+      const cls = err === best ? ' class="best"' : '';
 
       return `
         <tr${cls}>
@@ -444,76 +386,34 @@ function renderMatrixRows(rows, tbodyId){
 }
 
 function updateMatrix(){
-
   const n = parseInt(
     document.getElementById('matrix-n').value,
     10
   );
 
-  document.getElementById('matrix-n-val')
-    .textContent = n;
+  document.getElementById('matrix-n-val').textContent = n;
 
   const h = 1 / n;
 
   const intRows = [
-    {
-      name:'Trapecio compuesto',
-      num: trapInt(n),
-      exact: INT_EXACT,
-      evals: n + 1
-    },
-
-    {
-      name:'Simpson 1/3',
-      num: n % 2 === 0 ? simpson13(n) : NaN,
-      exact: INT_EXACT,
-      evals: n + 1
-    },
-
-    {
-      name:'Simpson 3/8',
-      num: n % 3 === 0 ? simpson38(n) : NaN,
-      exact: INT_EXACT,
-      evals: n + 1
-    }
+    { name:'Trapecio compuesto', num: trapInt(n), exact: INT_EXACT, evals: n + 1 },
+    { name:'Simpson 1/3', num: n % 2 === 0 ? simpson13(n) : NaN, exact: INT_EXACT, evals: n + 1 },
+    { name:'Simpson 3/8', num: n % 3 === 0 ? simpson38(n) : NaN, exact: INT_EXACT, evals: n + 1 }
   ];
 
   const derRows = [
-    {
-      name:'Dif. progresiva',
-      num:(fx(X0+h)-fx(X0))/h,
-      exact:DER_EXACT,
-      evals:2
-    },
-
-    {
-      name:'Dif. regresiva',
-      num:(fx(X0)-fx(X0-h))/h,
-      exact:DER_EXACT,
-      evals:2
-    },
-
-    {
-      name:'Dif. centrada',
-      num:(fx(X0+h)-fx(X0-h))/(2*h),
-      exact:DER_EXACT,
-      evals:2
-    }
+    { name:'Dif. progresiva', num:(fx(X0+h)-fx(X0))/h, exact:DER_EXACT, evals:2 },
+    { name:'Dif. regresiva', num:(fx(X0)-fx(X0-h))/h, exact:DER_EXACT, evals:2 },
+    { name:'Dif. centrada', num:(fx(X0+h)-fx(X0-h))/(2*h), exact:DER_EXACT, evals:2 }
   ];
 
   renderMatrixRows(intRows,'matrix-body-int');
-
   renderMatrixRows(derRows,'matrix-body-der');
 }
 
 function animateError(kind){
-
   const isDiff = kind === 'diff';
-
-  const canvasId =
-    isDiff
-      ? 'chart-diff-error'
-      : 'chart-int-error';
+  const canvasId = isDiff ? 'chart-diff-error' : 'chart-int-error';
 
   const hs = Array.from(
     {length:40},
@@ -521,73 +421,37 @@ function animateError(kind){
   );
 
   const datasets = isDiff
-    ? [
-        {
-          label:'Progresiva',
-          data:hs.map(h=>({
-            x:h,
-            y:Math.abs(h)*100
-          })),
-          borderColor:'#4f8cff'
-        }
-      ]
-    : [
-        {
-          label:'Trapecio',
-          data:hs.map(h=>({
-            x:h,
-            y:h*h*100
-          })),
-          borderColor:'#9b6dff'
-        }
-      ];
+    ? [{
+        label:'Progresiva',
+        data:hs.map(h=>({ x:h, y:Math.abs(h)*100 })),
+        borderColor:'#4f8cff'
+      }]
+    : [{
+        label:'Trapecio',
+        data:hs.map(h=>({ x:h, y:h*h*100 })),
+        borderColor:'#9b6dff'
+      }];
 
   const opts = {
-
     type:'line',
-
     data:{datasets},
-
     options:{
       responsive:true,
       maintainAspectRatio:false,
       parsing:false,
-
       scales:{
-        x:{
-          type:'linear'
-        },
-
-        y:{
-          beginAtZero:true
-        }
+        x:{ type:'linear' },
+        y:{ beginAtZero:true }
       }
     }
   };
 
   if(isDiff){
-
-    if(diffErrorChart){
-      diffErrorChart.destroy();
-    }
-
-    diffErrorChart =
-      new Chart(
-        document.getElementById(canvasId),
-        opts
-      );
-
+    if(diffErrorChart) diffErrorChart.destroy();
+    diffErrorChart = new Chart(document.getElementById(canvasId), opts);
   }else{
-
-    if(intErrorChart){
-      intErrorChart.destroy();
-    }
-
-    intErrorChart =
-      new Chart(
-        document.getElementById(canvasId),
-        opts
-      );
+    if(intErrorChart) intErrorChart.destroy();
+    intErrorChart = new Chart(document.getElementById(canvasId), opts);
   }
 }
 
@@ -595,190 +459,93 @@ function animateError(kind){
    CHAT IA
 ========================= */
 
-const chatBox =
-  document.getElementById('chatBox');
-
-const chatForm =
-  document.getElementById('chatForm');
-
-const userInput =
-  document.getElementById('userInput');
-
-const API_KEY = window.GROQ_API_KEY;
+const chatBox = document.getElementById('chatBox');
+const chatForm = document.getElementById('chatForm');
+const userInput = document.getElementById('userInput');
 
 function addMessage(text, role='bot'){
-
   const div = document.createElement('div');
-
   div.className = `msg ${role}`;
-
   div.textContent = text;
-
   chatBox.appendChild(div);
-
-  chatBox.scrollTop =
-    chatBox.scrollHeight;
+  chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-addMessage(
-  'Hola, soy tu asistente IA sobre métodos numéricos.',
-  'system'
-);
+addMessage('Hola, soy tu asistente IA sobre métodos numéricos.', 'system');
 
-chatForm.addEventListener(
-  'submit',
-  async (e)=>{
+chatForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-    e.preventDefault();
+  const q = userInput.value.trim();
+  if(!q) return;
 
-    const q = userInput.value.trim();
+  addMessage(q,'user');
+  userInput.value='';
 
-    if(!q) return;
+  const thinking = document.createElement('div');
+  thinking.className='msg system';
+  thinking.textContent='Pensando...';
+  chatBox.appendChild(thinking);
 
-    addMessage(q,'user');
+  try {
+    const response = await fetch('/api/chat', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body:JSON.stringify({
+        messages:[{ role:'user', content:q }]
+      })
+    });
 
-    userInput.value='';
+    const text = await response.text();
+    thinking.remove();
 
-    const thinking =
-      document.createElement('div');
-
-    thinking.className='msg system';
-
-    thinking.textContent='Pensando...';
-
-    chatBox.appendChild(thinking);
-
-    try{
-
-      const response = await fetch(
-        'https://api.groq.com/openai/v1/chat/completions',
-        {
-          method:'POST',
-
-          headers:{
-            'Content-Type':'application/json',
-            'Authorization':`Bearer ${API_KEY}`
-          },
-
-          body:JSON.stringify({
-
-            model:'llama-3.1-8b-instant',
-
-            messages:[
-              {
-                role:'system',
-
-                content:`
-Eres un tutor especializado
-en métodos numéricos.
-
-Solo responde sobre:
-- métodos numéricos
-- integración numérica
-- derivadas numéricas
-- regla trapezoidal
-- Simpson
-- Newton-Raphson
-- flujo vehicular
-- interpolación
-`
-              },
-
-              {
-                role:'user',
-                content:q
-              }
-            ],
-
-            temperature:0.7,
-            max_tokens:500
-          })
-        }
-      );
-
-      const data = await response.json();
-
-      thinking.remove();
-
-      if(data.error){
-
-        addMessage(
-          'Error: ' + data.error.message,
-          'bot'
-        );
-
-        return;
-      }
-
-      const answer =
-        data.choices?.[0]?.message?.content;
-
-      addMessage(
-        answer || 'No hubo respuesta.',
-        'bot'
-      );
-
-    }catch(err){
-
-      thinking.remove();
-
-      console.error(err);
-
-      addMessage(
-        'Error real: ' + err.message,
-        'bot'
-      );
+    if(!text){
+      throw new Error('El servidor respondió vacío');
     }
+
+    const data = JSON.parse(text);
+
+    if(data.error){
+      addMessage('Error: ' + (data.error.message || data.error), 'bot');
+      return;
+    }
+
+    addMessage(data.answer || 'No hubo respuesta.', 'bot');
+  } catch(err) {
+    thinking.remove();
+    console.error(err);
+    addMessage('Error real: ' + err.message, 'bot');
   }
-);
+});
 
 /* =========================
    LIGHTBOX
 ========================= */
 
 function initImageLightbox(){
-
-  const dialog =
-    document.getElementById('imageLightbox');
-
-  const lightboxImg =
-    document.getElementById('lightboxImg');
-
-  const closeBtn =
-    dialog.querySelector('.lightbox-close');
+  const dialog = document.getElementById('imageLightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const closeBtn = dialog.querySelector('.lightbox-close');
 
   function openLightbox(img){
-
     lightboxImg.src = img.src;
-
     lightboxImg.alt = img.alt;
-
     dialog.showModal();
   }
 
   function closeLightbox(){
-
     dialog.close();
-
     lightboxImg.removeAttribute('src');
   }
 
   document
     .querySelectorAll('.hero-img')
     .forEach(hero=>{
-
       const img = hero.querySelector('img');
-
-      hero.addEventListener(
-        'click',
-        ()=>openLightbox(img)
-      );
+      hero.addEventListener('click', ()=>openLightbox(img));
     });
 
-  closeBtn.addEventListener(
-    'click',
-    closeLightbox
-  );
+  closeBtn.addEventListener('click', closeLightbox);
 }
 
 buildTrap();
